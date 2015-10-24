@@ -1,3 +1,4 @@
 vendor/
 .idea/workspace.xml
 .env
+storage/data.db
