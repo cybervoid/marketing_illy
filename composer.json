@@ -1,6 +1,7 @@
 {
     "require": {
         "klein/klein": "^2.1",
-        "twig/twig": "^1.22"
+        "twig/twig": "^1.22",
+        "vlucas/phpdotenv": "^2.0"
     }
 }
