@@ -36,13 +36,26 @@ $klein->respond(function ($request, $response, $service, $app) use ($klein)
 
 $klein->get('/', function (Request $request, Response $response, ServiceProvider $service, $app)
 {
-    return $app->view->render('index.html', ['name' => 'Fabien']);
+
+    $error = '';
+    $messages = $service->flashes('error');
+    if(isset($messages[0])) $error = $messages[0];
+
+    return $app->view->render('index.html', ['error' => $error]);
 });
 
-$klein->post('/auth', function (Request $request, $response, $service, $app)
+$klein->post('/auth', function (Request $request, Response $response, $service, $app)
 {
 
-    var_dump($request->params());
+//    var_dump($request->params());
+    $db = new PDO(getenv('DSN'));
+    $result = $db->query("SELECT * FROM user",PDO::FETCH_ASSOC);
+    $row = $result->fetch();
+    if(($row['username']===$request->username) && ($row['password']===$request->password))
+        echo 'welcome'; else{
+        $service->flash('Wrong username and/or password.', 'error');
+        $response->redirect('/');
+    }
 });
 
 $klein->get('/resetpassword', function (Request $request, Response $response, ServiceProvider $service, $app)
