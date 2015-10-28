@@ -1,0 +1,10 @@
+.login-form {
+  $width: 300px;
+  width: $width;
+  position: absolute;
+  top: 50%;
+  margin-top: -100px;
+  left: 50%;
+  margin-left: -$width / 2;
+
+}

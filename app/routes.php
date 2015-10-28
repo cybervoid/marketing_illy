@@ -51,7 +51,8 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
     $db = new PDO(getenv('DSN'));
     $result = $db->query("SELECT * FROM user",PDO::FETCH_ASSOC);
     $row = $result->fetch();
-    if(($row['username']===$request->username) && ($row['password']===$request->password))
+
+    if(($row['username']===$request->param('username')) && ($row['password']===$request->param('password')))
         echo 'welcome'; else{
         $service->flash('Wrong username and/or password.', 'error');
         $response->redirect('/');
