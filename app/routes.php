@@ -30,7 +30,7 @@ $klein->respond(function ($request, $response, $service, $app) use ($klein)
         $cache = sys_get_temp_dir() . getenv('CACHE');
     }
 
-    $twig = new Twig_Environment($loader, array('cache' => $cache,));
+    $twig = new Twig_Environment($loader, array('cache' => $cache, 'debug' => getenv('DEV')));
     $app->view = $twig;
 });
 
@@ -41,7 +41,7 @@ $klein->get('/', function (Request $request, Response $response, ServiceProvider
     $messages = $service->flashes('error');
     if(isset($messages[0])) $error = $messages[0];
 
-    return $app->view->render('index.html', ['error' => $error]);
+    return $app->view->render('login.html', ['error' => $error]);
 });
 
 $klein->post('/auth', function (Request $request, Response $response, $service, $app)
@@ -53,7 +53,7 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
     $row = $result->fetch();
 
     if(($row['username']===$request->param('username')) && ($row['password']===$request->param('password')))
-        echo 'welcome'; else{
+        return $app->view->render('report.html', []); else{
         $service->flash('Wrong username and/or password.', 'error');
         $response->redirect('/');
     }

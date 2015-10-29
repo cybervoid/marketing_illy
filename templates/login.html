@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head >
-    <meta charset="UTF-8" >
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/vendor/jquery/dist/jquery.js"></script>
+{% extends "mainTemplate.html" %}
 
-    <title ></title >
-</head >
-<body >
+{% block title %} Login {% endblock %}
 
+
+{% block content %}
 <div class="login-form center-block">
 
     Login
@@ -40,6 +35,4 @@
 
     </form>
 </div>
-
-</body >
-</html >
+{% endblock %}
