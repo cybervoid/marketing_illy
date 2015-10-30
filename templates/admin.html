@@ -1,0 +1,88 @@
+{% extends "mainTemplate.html" %}
+
+{% block title %} Administrator Section {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="/css/admin.css" > {% endblock %}
+
+
+{% block content %}
+
+<div class="panel panel-default" >
+    <div class="panel-heading" >
+        <h3 class="panel-title" >Welcome to illy caffè online prices list administrators section</h3 >
+    </div >
+
+
+    <div class="content-panel-main" >
+
+        <div class="panel panel-info content-panel-users" >
+
+            <div class="panel-heading" >Change regular password</div >
+            <div class="panel-body" >
+                <form method="post" action="/resetusr" name="users">
+
+                <label for="user_old_pass" >Old password</label >
+                <input type="password" id="user_old_pass" name="user_old_pass" class="form-control components-separator" required>
+
+                <label for="user_new_pass" >New password</label >
+                <input type="password" id="user_new_pass" name="user_new_pass" class="form-control components-separator" required>
+
+                <label for="user_confirm_pass" >Repeat password</label >
+                <input type="password" id="user_confirm_pass" name="user_confirm_pass" class="form-control components-separator" required>
+
+                <button type="submit" class="btn btn-default" >Change</button >
+                </form>
+        </div >
+            </div>
+
+
+        <div class="panel panel-info content-panel-admin content-panel-admin">
+            <div class="panel-heading" >Change admin access password</div >
+            <div class="panel-body" >
+                <form method="post" action="/auth" name="admin">
+
+                <label for="adm_old_pass" >Old password</label >
+                <input type="password" id="adm_old_pass" name="adm_old_pass" class="form-control components-separator" required>
+
+                <label for="adm_new_pass" >New password</label >
+                <input type="password" id="adm_new_pass" name="adm_new_pass" class="form-control components-separator" required>
+
+
+                <label for="adm_confirm_pass" >Repeat password</label >
+                <input type="password" id="adm_confirm_pass" name="adm_confirm_pass" class="form-control components-separator" required>
+
+                <button type="submit" class="btn btn-default" >Change</button >
+
+                </form>
+            </div >
+        </div >
+    </div >
+
+
+    <div class="content-panel-main-secondrow" >
+
+
+        <div class="panel panel-info content-panel-admin content-panel-upload">
+            <div class="panel-heading" >Upload new MAP Price list</div >
+            <div class="panel-body" >
+                <form method="post" action="/auth" name="admin">
+                    <div class="form-group">
+                        <label for="upload_csv">File input</label>
+                        <input type="file" id="upload_csv" required>
+                        <p class="help-block">File format must be CSV windows comma text file separated.</p>
+                        <button type="submit" class="btn btn-default" >Upload</button >
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+
+    </div>
+
+</div >
+
+
+</div >
+
+
+{% endblock %}

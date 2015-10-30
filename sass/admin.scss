@@ -1,0 +1,36 @@
+.content-panel-main {
+  top: 90px;
+  left: 25%;
+  position: absolute;
+  width: 50%;
+
+}
+
+
+.content-panel-main-secondrow {
+  top: 415px;
+  left: 25%;
+  position: absolute;
+  width: 50%;
+
+}
+
+.content-panel-users{
+  width: 300px;
+  /* position: absolute; */
+  float: left;
+  top: 25px;
+  left: 3%;
+}
+
+.content-panel-admin{
+  float: right;
+}
+
+.content-panel-upload{
+  float: left;
+}
+
+.components-separator{
+  margin-bottom: 10px;
+}

@@ -8,10 +8,25 @@
   margin-left: -$width / 2;
 }
 
+.login-admins-sep{
+  position: relative;
+  left: 61px;
+}
+
+.error-msg{
+ color: red;
+  font-size: small;
+  font-style: italic;
+}
+
 .table-header{
   font-weight: bold
 }
 
+
 .main-report{
-  width: 300px;
+  width: 40%;
+  top: 100px;
+  left: 45px;
+  position: absolute;
 }

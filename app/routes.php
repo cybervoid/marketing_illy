@@ -17,7 +17,7 @@ $klein->respond(function ($request, $response, $service, $app) use ($klein)
     });
 
     // The fourth parameter can be used to share scope and global objects
-    $app->register('db', function()
+    $app->register('db', function ()
     {
         return new PDO(getenv('DSN'));
     });
@@ -39,7 +39,10 @@ $klein->get('/', function (Request $request, Response $response, ServiceProvider
 
     $error = '';
     $messages = $service->flashes('error');
-    if(isset($messages[0])) $error = $messages[0];
+    if (isset($messages[0]))
+    {
+        $error = $messages[0];
+    }
 
     return $app->view->render('login.html', ['error' => $error]);
 });
@@ -47,21 +50,54 @@ $klein->get('/', function (Request $request, Response $response, ServiceProvider
 $klein->post('/auth', function (Request $request, Response $response, $service, $app)
 {
 
-//    var_dump($request->params());
     $db = new PDO(getenv('DSN'));
-    $result = $db->query("SELECT * FROM user",PDO::FETCH_ASSOC);
+    $result = $db->query("SELECT username, password, role FROM user WHERE username='" . $request->param('username') . "'", PDO::FETCH_ASSOC);
     $row = $result->fetch();
 
-    if(($row['username']===$request->param('username')) && ($row['password']===$request->param('password')))
-        return $app->view->render('report.html', []); else{
+
+    if (($row['username'] === $request->param('username')) && ($row['password'] === $request->param('password')))
+    {
+        if (($request->param('administrator') == "on") && ($row['role']==='TRUE'))
+        {  // login as a site administrator
+            return $app->view->render('admin.html', []);
+        }
+
+        return $app->view->render('report.html', []);
+    }
+    else
+    {
         $service->flash('Wrong username and/or password.', 'error');
         $response->redirect('/');
     }
+
 });
 
-$klein->get('/resetpassword', function (Request $request, Response $response, ServiceProvider $service, $app)
+$klein->post('/resetusr', function (Request $request, Response $response, $service, $app)
 {
-    echo $app->view->render('index.html', ['name' => 'Fabien']);
+    echo $request->param('user_old_pass');
 });
+
+
+function loginValidator(Request $request){
+    $db = new PDO(getenv('DSN'));
+    $result = $db->query("SELECT username, password, role FROM user WHERE username='" . $request->param('username') . "'", PDO::FETCH_ASSOC);
+    $row = $result->fetch();
+
+
+    if (($row['username'] === $request->param('username')) && ($row['password'] === $request->param('password')))
+    {
+        if (($request->param('administrator') == "on") && ($row['role']==='TRUE'))
+        {  // login as a site administrator
+            return $app->view->render('admin.html', []);
+        }
+
+        return $app->view->render('report.html', []);
+    }
+    else
+    {
+        $service->flash('Wrong username and/or password.', 'error');
+        $response->redirect('/');
+    }
+}
 
 $klein->dispatch();
