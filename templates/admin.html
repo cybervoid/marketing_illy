@@ -21,6 +21,7 @@
             <div class="panel-body" >
                 <form method="post" action="/resetusr" name="users">
 
+                    <input type="hidden" name="username" value="{{ user }}">
                 <label for="user_old_pass" >Old password</label >
                 <input type="password" id="user_old_pass" name="user_old_pass" class="form-control components-separator" required>
 
@@ -43,7 +44,7 @@
 
                 <label for="adm_old_pass" >Old password</label >
                 <input type="password" id="adm_old_pass" name="adm_old_pass" class="form-control components-separator" required>
-
+                    <input type="hidden" name="username" value="{{ admin }}">
                 <label for="adm_new_pass" >New password</label >
                 <input type="password" id="adm_new_pass" name="adm_new_pass" class="form-control components-separator" required>
 
@@ -86,3 +87,4 @@
 
 
 {% endblock %}
+

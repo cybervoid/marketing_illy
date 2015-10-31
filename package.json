@@ -1,0 +1,10 @@
+{
+  "name": "my-program",
+  "version": "1.2.5",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-exec": "^2.1.2",
+    "gulp-sass": "^2.1.0",
+    "node-sass": "^3.4.1"
+  }
+}

@@ -7,32 +7,7 @@ use Klein\ServiceProvider;
 
 $klein = new \Klein\Klein();
 
-$klein->respond(function ($request, $response, $service, $app) use ($klein)
-{
-    // Handle exceptions => flash the message and redirect to the referrer
-    $klein->onError(function ($klein, $err_msg)
-    {
-        $klein->service()->flash($err_msg);
-        $klein->service()->back();
-    });
-
-    // The fourth parameter can be used to share scope and global objects
-    $app->register('db', function ()
-    {
-        return new PDO(getenv('DSN'));
-    });
-
-    $loader = new Twig_Loader_Filesystem(ROOT . '/templates');
-
-    $cache = false;
-    if (getenv('CACHE'))
-    {
-        $cache = sys_get_temp_dir() . getenv('CACHE');
-    }
-
-    $twig = new Twig_Environment($loader, array('cache' => $cache, 'debug' => getenv('DEV')));
-    $app->view = $twig;
-});
+require_once 'default_controller.php';
 
 $klein->get('/', function (Request $request, Response $response, ServiceProvider $service, $app)
 {
@@ -49,55 +24,70 @@ $klein->get('/', function (Request $request, Response $response, ServiceProvider
 
 $klein->post('/auth', function (Request $request, Response $response, $service, $app)
 {
+    $access = $app->auth->loginValidator($request);
 
-    $db = new PDO(getenv('DSN'));
-    $result = $db->query("SELECT username, password, role FROM user WHERE username='" . $request->param('username') . "'", PDO::FETCH_ASSOC);
-    $row = $result->fetch();
-
-
-    if (($row['username'] === $request->param('username')) && ($row['password'] === $request->param('password')))
+    if (!$access)
     {
-        if (($request->param('administrator') == "on") && ($row['role']==='TRUE'))
-        {  // login as a site administrator
-            return $app->view->render('admin.html', []);
-        }
-
-        return $app->view->render('report.html', []);
+        $service->flash('Wrong username and/or password.', 'error');
+        return $response->redirect('/');
     }
     else
     {
-        $service->flash('Wrong username and/or password.', 'error');
-        $response->redirect('/');
+        return $app->view->render($access . '.html', ['user' => getenv('USERNAME'),
+            'admin' => getenv('ADMIN-USERNAME')]);
     }
+
 
 });
 
 $klein->post('/resetusr', function (Request $request, Response $response, $service, $app)
 {
-    echo $request->param('user_old_pass');
-});
 
+    $result = userNameValidator($request->param('username'), $request->param('user_old_pass'));
 
-function loginValidator(Request $request){
-    $db = new PDO(getenv('DSN'));
-    $result = $db->query("SELECT username, password, role FROM user WHERE username='" . $request->param('username') . "'", PDO::FETCH_ASSOC);
-    $row = $result->fetch();
-
-
-    if (($row['username'] === $request->param('username')) && ($row['password'] === $request->param('password')))
+    if ($result)
     {
-        if (($request->param('administrator') == "on") && ($row['role']==='TRUE'))
-        {  // login as a site administrator
-            return $app->view->render('admin.html', []);
-        }
-
-        return $app->view->render('report.html', []);
+        changePassword($request->param('username'), $request->param('user_new_password'));
     }
     else
     {
-        $service->flash('Wrong username and/or password.', 'error');
-        $response->redirect('/');
+        return $app->view->render($access . '.html', ['user' => getenv('USERNAME'),
+            'admin' => getenv('ADMIN-USERNAME')]);
+        $service->flash('Please verify your old password', 'error');
     }
+});
+
+function changePassword($username, $password)
+{
+    $db = new PDO(getenv('DSN'));
+    //$result = $db->query("UPDATE username, password FROM user WHERE username='" . $username . "'", PDO::FETCH_ASSOC);
+    $result = $db->query("UPDATE user SET password='" . $password . "' WHERE username='" . $username . "'", PDO::FETCH_ASSOC);
+    var_dump($result);
+    die;
 }
 
+function userNameValidator($username, $password)
+{
+
+    $db = new PDO(getenv('DSN'));
+    $result = $db->query("SELECT username, password FROM user WHERE username='" . $username . "'", PDO::FETCH_ASSOC);
+    $row = $result->fetch();
+
+    if (($row['username'] === $username) && ($row['password'] === $password))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+
+
+
 $klein->dispatch();
+
+// todo en el admin page verificar con javascript que el old and new passwords are the same
+// todo hacer un footer en el template con el logo de illy

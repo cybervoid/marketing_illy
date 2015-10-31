@@ -1,7 +1,14 @@
+#!/usr/bin/php
 <?php
 
-$db = new PDO(getenv('DSN'));
+define('ROOT', realpath(__DIR__));
 
+require_once ROOT . '/vendor/autoload.php';
+
+$dotenv = new Dotenv\Dotenv(ROOT);
+$dotenv->load();
+
+$db = new PDO(sprintf(getenv('DSN'), ROOT));
 
 $db->exec("
     CREATE TABLE user (
@@ -10,10 +17,9 @@ $db->exec("
       modified_ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       username VARCHAR(255) NOT NULL,
       password VARCHAR(40) NOT NULL,
-      role Boolean NOT NULL
+      role INTEGER NOT NULL
     );
 ");
-
 
 
 $db->exec("
@@ -22,7 +28,7 @@ $db->exec("
       username, password, role
     )
   VALUES (
-    'illy', 'test', 'FALSE'
+    'illy', 'test', 1
   )
 ");
 
@@ -32,7 +38,7 @@ $db->exec("
       username, password, role
     )
   VALUES (
-    'admin', 'test', 'TRUE'
+    'admin', 'test', 0
   )
 ");
 
