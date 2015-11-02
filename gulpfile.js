@@ -16,4 +16,13 @@ gulp.task('composer', function () {
 
 });
 
-gulp.task('default', ['composer', 'sass']);
+gulp.task('bower', function (cb) {
+    exec('bower install --allow-root', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+
+gulp.task('default', ['composer', 'bower' ,'sass']);

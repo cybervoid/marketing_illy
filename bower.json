@@ -1,0 +1,21 @@
+{
+  "name": "marketing_illy",
+  "version": "1.0",
+  "homepage": "https://github.com/rafaelgil83/marketing_illy",
+  "authors": [
+    "Rafael Gil <rafaelgil83@gmail.com>"
+  ],
+  "main": "bower.json",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
