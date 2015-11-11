@@ -42,6 +42,7 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
 
 $klein->post('/resetusr', function (Request $request, Response $response, $service, $app)
 {
+    // averiguar que hace access
 
     $result = userNameValidator($request->param('username'), $request->param('user_old_pass'));
 
