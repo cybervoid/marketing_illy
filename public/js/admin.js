@@ -13,6 +13,8 @@ var App = App || {};
     $(document).ready(function () {
 
         $('#users').submit(function () {
+            alert('feature under development');
+            return false;
 
             //alert('This option is under development');
             if($('#user_new_pass').val()!=$('#user_confirm_pass').val()){
@@ -23,10 +25,19 @@ var App = App || {};
         });
 
         $('#admin').submit(function () {
+
+            alert('feature under development');
+            return false;
+
             if($('#adm_new_pass').val()!=$('#adm_confirm_pass').val()){
                 $('#adm_frm_error').html("New passwords doesn't match.");
                 return false;
             }
+        });
+
+        $('#upload_frm').submit(function () {
+            alert('feature under development');
+            return false;
 
         });
 
