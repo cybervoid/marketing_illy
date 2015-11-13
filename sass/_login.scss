@@ -1,12 +1,44 @@
+.mainContainer{
+  //background: #9c9c9c;
+  $width: 500px;
+  width: $width;
+  position: absolute;
+  top: 30%;
+  margin-top: -100px;
+  left: 50%;
+  margin-left: -$width / 2;
+
+}
+
+
 .login-form {
+  $width: 300px;
+  width: $width;
+  float: left;
+  //background: red;
+  //position: absolute;
+  //top: 50%;
+  //margin-top: -100px;
+  //left: 30%;
+  //margin-left: -$width / 2;
+}
+
+
+.login-img {
+  float: left;
+  /*
   $width: 300px;
   width: $width;
   position: absolute;
   top: 50%;
   margin-top: -100px;
-  left: 50%;
+  left: 70%;
   margin-left: -$width / 2;
+  */
 }
+
+
+
 
 .login-admins-sep{
   position: relative;
