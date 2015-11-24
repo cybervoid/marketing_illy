@@ -1,6 +1,6 @@
 .mainContainer{
   //background: #9c9c9c;
-  $width: 512px;
+  $width: 545px;
   width: $width;
   position: absolute;
   top: 30%;
@@ -22,7 +22,6 @@
   //left: 30%;
   //margin-left: -$width / 2;
 }
-
 
 .login-img {
   float: left;
@@ -62,4 +61,20 @@
   top: 100px;
   left: 45px;
   position: absolute;
+}
+
+.loginFrm{
+  margin-right: 33px;
+}
+
+.illy-header{
+  background-color: #d1231f;
+}
+
+.chart-top-sep{
+  margin-bottom: 25px;
+}
+
+.chart-bottom-sep{
+  margin-top: 40px;
 }

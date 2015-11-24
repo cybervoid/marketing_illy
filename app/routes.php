@@ -40,55 +40,40 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
 
 });
 
-$klein->post('/resetusr', function (Request $request, Response $response, $service, $app)
+$klein->post('/resetpwd', function (Request $request, Response $response, $service, $app)
 {
-    // averiguar que hace access
 
-    $result = userNameValidator($request->param('username'), $request->param('user_old_pass'));
+    $msg= '';
+
+    $result = $app->auth->userNameValidator($request->param('username'), $request->param('old_pass'));
 
     if ($result)
     {
-        changePassword($request->param('username'), $request->param('user_new_password'));
+        $changePassword= $app->auth->changePassword($request->param('username'), $request->param('new_pass'));
+        if($changePassword){
+            $msg = 'Password changed successfully';
+        } else $msg = 'Error trying to change password';
     }
     else
     {
-        return $app->view->render($access . '.html', ['user' => getenv('USERNAME'),
-            'admin' => getenv('ADMIN-USERNAME')]);
-        $service->flash('Please verify your old password', 'error');
+        $msg = 'Please verify your old password';
     }
+
+        return $app->view->render('admin.html', ['user' => getenv('USERNAME'),
+            'admin' => getenv('ADMIN-USERNAME'), 'msg_div' => $request->param('req_type'), 'msg' => $msg]);
+
 });
 
-function changePassword($username, $password)
-{
-    $db = new PDO(getenv('DSN'));
-    //$result = $db->query("UPDATE username, password FROM user WHERE username='" . $username . "'", PDO::FETCH_ASSOC);
-    $result = $db->query("UPDATE user SET password='" . $password . "' WHERE username='" . $username . "'", PDO::FETCH_ASSOC);
-    var_dump($result);
-    die;
-}
-
-function userNameValidator($username, $password)
-{
-
-    $db = new PDO(getenv('DSN'));
-    $result = $db->query("SELECT username, password FROM user WHERE username='" . $username . "'", PDO::FETCH_ASSOC);
-    $row = $result->fetch();
-
-    if (($row['username'] === $username) && ($row['password'] === $password))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-
-}
-
-
+$klein->respond(function ($request, $response, $service) {
+    $service->csv = function ($object) {
+        var_dump($service->csv);
+    };
+});
 
 
 $klein->dispatch();
 
 // todo en el admin page verificar con javascript que el old and new passwords are the same
 // todo hacer un footer en el template con el logo de illy
+// todo check why if you don't type in any password it works
+// todo if redirected to any url doesn't exist make it forward to home page

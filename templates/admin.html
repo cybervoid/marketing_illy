@@ -4,14 +4,15 @@
 {% block css %}
 <link rel="stylesheet" href="/css/admin.css" > {% endblock %}
 {% block js %}
-<script src="/js/admin.js"></script> {% endblock %}
+<script src="/js/admin.js" ></script > {% endblock %}
 
 
 {% block content %}
 
 <div class="panel panel-default" >
     <div class="panel-heading" >
-        <h3 class="panel-title" >Welcome to illy caffè North America MAP Pricing list administrators section <a href="/">[Close]</a> </h3 >
+        <h3 class="panel-title" >Welcome to illy caffè North America MAP Pricing list administrators section <a
+                href="/" >[Close]</a ></h3 >
 
     </div >
 
@@ -19,48 +20,64 @@
     <div class="content-panel-main" >
 
 
-
         <div class="panel panel-info content-panel-users" >
 
             <div class="panel-heading" >Change regular password</div >
             <div class="panel-body" >
-                <form method="post" action="/resetusr" name="users" id="users">
+                <form method="post" action="/resetpwd" name="users" id="users" >
 
-                    <input type="hidden" name="username" value="{{ user }}">
-                <label for="user_old_pass" >Old password</label >
-                <input type="password" id="user_old_pass" name="user_old_pass" class="form-control components-separator" required>
+                    <input type="hidden" name="username" value="{{ user }}" >
+                    <label for="old_pass" >Old password</label >
+                    <input type="password" id="old_pass" name="old_pass" class="form-control components-separator"
+                           required >
 
-                <label for="user_new_pass" >New password</label >
-                <input type="password" id="user_new_pass" name="user_new_pass" class="form-control components-separator" required>
+                    <label for="new_pass" >New password</label >
+                    <input type="password" id="new_pass" name="new_pass" class="form-control components-separator"
+                           required >
 
-                <label for="user_confirm_pass" >Repeat password</label >
-                <input type="password" id="user_confirm_pass" name="user_confirm_pass" class="form-control components-separator" required>
+                    <label for="confirm_pass" >Repeat password</label >
+                    <input type="password" id="confirm_pass" name="user_confirm_pass"
+                           class="form-control components-separator" required >
 
-                <button type="submit" class="btn btn-default" id="btn-user-frm">Change</button >
-                    <span class="error-msg" id="user_frm_error"></span>
-                </form>
+                    <button type="submit" class="btn btn-default" id="btn-user-frm" >Change</button >
+                    <input type="hidden" name="req_type" value="user" >
+
+                    <span class="error-msg" id="user_frm_error" >
+                        {% if msg_div == "user" %}
+                        {{ msg }}
+                        {% endif %}
+                    </span >
+                </form >
+            </div >
         </div >
-            </div>
 
 
-        <div class="panel panel-info content-panel-admin content-panel-admin">
+        <div class="panel panel-info content-panel-admin content-panel-admin" >
             <div class="panel-heading" >Change admin access password</div >
             <div class="panel-body" >
-                <form method="post" action="/resetusr" name="admin" id="admin">
+                <form method="post" action="/resetpwd" name="admin" id="admin" >
 
-                <label for="adm_old_pass" >Old password</label >
-                <input type="password" id="adm_old_pass" name="adm_old_pass" class="form-control components-separator" required>
-                    <input type="hidden" name="username" value="{{ admin }}">
-                <label for="adm_new_pass" >New password</label >
-                <input type="password" id="adm_new_pass" name="adm_new_pass" class="form-control components-separator" required>
+                    <label for="old_pass" >Old password</label >
+                    <input type="password" id="old_pass" name="old_pass" class="form-control components-separator"
+                           required >
+                    <input type="hidden" name="username" value="{{ admin }}" >
+                    <label for="new_pass" >New password</label >
+                    <input type="password" id="new_pass" name="new_pass" class="form-control components-separator"
+                           required >
 
 
-                <label for="adm_confirm_pass" >Repeat password</label >
-                <input type="password" id="adm_confirm_pass" name="adm_confirm_pass" class="form-control components-separator" required>
+                    <label for="adm_confirm_pass" >Repeat password</label >
+                    <input type="password" id="adm_confirm_pass" name="adm_confirm_pass"
+                           class="form-control components-separator" required >
 
-                <button type="submit" class="btn btn-default" >Change</button >
-                    <span class="error-msg" id="adm_frm_error"></span>
-                </form>
+                    <button type="submit" class="btn btn-default" >Change</button >
+                    <input type="hidden" name="req_type" value="admin" >
+                    <span class="error-msg" id="adm_frm_error" >
+                                            {% if msg_div == "admin" %}
+                    {{ msg }}
+                    {% endif %}
+                    </span >
+                </form >
             </div >
         </div >
     </div >
@@ -69,22 +86,22 @@
     <div class="content-panel-main-secondrow" >
 
 
-        <div class="panel panel-info content-panel-admin content-panel-upload">
+        <div class="panel panel-info content-panel-admin content-panel-upload" >
             <div class="panel-heading" >Upload new MAP Price list</div >
             <div class="panel-body" >
-                <form method="post" action="/auth1" name="upload_frm" id="upload_frm">
-                    <div class="form-group">
-                        <label for="upload_csv">File input</label>
-                        <input type="file" id="upload_csv" required>
-                        <p class="help-block">File format must be CSV windows comma text file separated.</p>
+                <form method="post" action="/report" name="upload_frm" id="upload_frm" >
+                    <div class="form-group" >
+                        <label for="upload_csv" >File input</label >
+                        <input type="file" id="upload_csv" required >
+                        <p class="help-block" >File format must be CSV windows comma text file separated.</p >
                         <button type="submit" class="btn btn-default" >Upload</button >
-                    </div>
-                    </form>
-                </div>
-            </div>
+                    </div >
+                </form >
+            </div >
+        </div >
 
 
-    </div>
+    </div >
 
 </div >
 

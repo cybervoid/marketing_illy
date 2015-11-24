@@ -2,10 +2,12 @@
 
 {% block title %} Login {% endblock %}
 
+{% block js %}
+<script src="/js/login.js"></script> {% endblock %}
 
 {% block content %}
 <div id="mainContainer" class="mainContainer">
-    <div class="login-form center-block" >
+    <div class="login-form center-block loginFrm" >
 
         Login into illy caffè North America MAP Pricing list
 
@@ -21,7 +23,7 @@
         <div class="form-group" >
             <form method="post" action="/auth" >
                 <label for="username" >Username</label >
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" >
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
 
                 <div class="form-group" >
                     <label for="password" >Password</label >
@@ -42,7 +44,7 @@
 
 
     <div id="image" class="login-img">
-        <img src="img/login.jpg" width="200px" height="200px">
+        <img src="img/illy-logo.jpg" width="200px" height="200px">
     </div >
 
 
