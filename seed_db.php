@@ -28,7 +28,7 @@ $db->exec("
       username, password, role
     )
   VALUES (
-    'illy', 'test', 1
+    'illyuser', 'illymap', 1
   )
 ");
 
@@ -38,7 +38,7 @@ $db->exec("
       username, password, role
     )
   VALUES (
-    'admin', 'test', 0
+    'admin', 'Welcome!123', 0
   )
 ");
 
