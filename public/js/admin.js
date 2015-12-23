@@ -14,11 +14,6 @@ var App = App || {};
 
         $('#users').submit(function () {
 
-            /*
-            alert('feature under development');
-            return false;
-            */
-
             if($('#new_pass').val()!=$('#confirm_pass').val()){
                 $('#user_frm_error').html("New passwords doesn't match.");
                 return false;
@@ -28,11 +23,6 @@ var App = App || {};
 
         $('#admin').submit(function () {
 
-            /*
-            alert('feature under development');
-            return false;
-            */
-
             if($('#new_pass').val()!=$('#confirm_pass').val()){
                 $('#adm_frm_error').html("New passwords doesn't match.");
                 return false;
@@ -40,10 +30,9 @@ var App = App || {};
         });
 
         $('#upload_frm').submit(function () {
-            /*
-            alert('feature under development');
-            return false;
-            */
+
+           // alert('feature under development');
+            //return false;
 
         });
 

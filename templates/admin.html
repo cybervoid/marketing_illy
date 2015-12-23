@@ -89,10 +89,10 @@
         <div class="panel panel-info content-panel-admin content-panel-upload" >
             <div class="panel-heading" >Upload new MAP Price list</div >
             <div class="panel-body" >
-                <form method="post" action="/report" name="upload_frm" id="upload_frm" >
+                <form method="post" action="/upload" name="upload_frm" id="upload_frm" >
                     <div class="form-group" >
                         <label for="upload_csv" >File input</label >
-                        <input type="file" id="upload_csv" required >
+                        <input type="file" name="upload_csv" id="upload_csv" required >
                         <p class="help-block" >File format must be CSV windows comma text file separated.</p >
                         <button type="submit" class="btn btn-default" >Upload</button >
                     </div >

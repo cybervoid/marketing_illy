@@ -22,6 +22,11 @@ $klein->get('/', function (Request $request, Response $response, ServiceProvider
     return $app->view->render('login.html', ['error' => $error]);
 });
 
+$klein->get('/auth', function (Request $request, Response $response, $service, $app)
+{
+    return $response->redirect('/');
+});
+
 $klein->post('/auth', function (Request $request, Response $response, $service, $app)
 {
     $access = $app->auth->loginValidator($request);
@@ -64,10 +69,10 @@ $klein->post('/resetpwd', function (Request $request, Response $response, $servi
 
 });
 
-$klein->respond(function ($request, $response, $service) {
-    $service->csv = function ($object) {
-        var_dump($service->csv);
-    };
+$klein->post('/upload', function (Request $request, Response $response, $service, $app)
+{
+    var_dump($_FILES);
+    var_dump($request->files());
 });
 
 
