@@ -9,6 +9,18 @@ var App = App || {};
 
     App.newHire = App.newHire || {};
 
+    riot.mount('login', {} );
+
+    
+    var errorMessage = $('meta[name="message"]').prop('content');
+
+    if(errorMessage!= '')
+    {
+        $('#alert').attr('riot-tag', 'alert');
+        riot.mount('alert', {
+            'type': 'danger',
+            message : errorMessage});
+    }
 
     $(document).ready(function () {
 

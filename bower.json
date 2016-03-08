@@ -16,6 +16,8 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "riot": "~2.3.16",
+    "bootstrap": "~3.3.6"
   }
 }

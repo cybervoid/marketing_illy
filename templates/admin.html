@@ -84,12 +84,10 @@
 
 
     <div class="content-panel-main-secondrow" >
-
-
         <div class="panel panel-info content-panel-admin content-panel-upload" >
             <div class="panel-heading" >Upload new MAP Price list</div >
             <div class="panel-body" >
-                <form method="post" action="/upload" name="upload_frm" id="upload_frm" >
+                <form method="post" action="/upload" name="upload_frm" id="upload_frm" enctype="multipart/form-data">
                     <div class="form-group" >
                         <label for="upload_csv" >File input</label >
                         <input type="file" name="upload_csv" id="upload_csv" required >

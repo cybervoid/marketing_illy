@@ -34,6 +34,7 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
     if (!$access)
     {
         $service->flash('Wrong username and/or password.', 'error');
+
         return $response->redirect('/');
     }
     else
@@ -48,31 +49,83 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
 $klein->post('/resetpwd', function (Request $request, Response $response, $service, $app)
 {
 
-    $msg= '';
+    $msg = '';
 
     $result = $app->auth->userNameValidator($request->param('username'), $request->param('old_pass'));
 
     if ($result)
     {
-        $changePassword= $app->auth->changePassword($request->param('username'), $request->param('new_pass'));
-        if($changePassword){
+        $changePassword = $app->auth->changePassword($request->param('username'), $request->param('new_pass'));
+        if ($changePassword)
+        {
             $msg = 'Password changed successfully';
-        } else $msg = 'Error trying to change password';
+        }
+        else
+        {
+            $msg = 'Error trying to change password';
+        }
     }
     else
     {
         $msg = 'Please verify your old password';
     }
 
-        return $app->view->render('admin.html', ['user' => getenv('USERNAME'),
-            'admin' => getenv('ADMIN-USERNAME'), 'msg_div' => $request->param('req_type'), 'msg' => $msg]);
+    return $app->view->render('admin.html', ['user' => getenv('USERNAME'), 'admin' => getenv('ADMIN-USERNAME'),
+        'msg_div' => $request->param('req_type'), 'msg' => $msg]);
 
 });
 
 $klein->post('/upload', function (Request $request, Response $response, $service, $app)
 {
-    var_dump($_FILES);
-    var_dump($request->files());
+
+
+    if (isset($_FILES["upload_csv"]))
+    {
+        if ($_FILES["upload_csv"]["error"] >= 0)
+        {
+            //Print file details
+            echo "Upload: " . $_FILES["upload_csv"]["name"] . "<br />";
+            echo "Type: " . $_FILES["upload_csv"]["type"] . "<br />";
+            echo "Size: " . ($_FILES["upload_csv"]["size"] / 1024) . " Kb<br />";
+            echo "Temp file: " . $_FILES["upload_csv"]["tmp_name"] . "<br />";
+
+
+            //Store file in directory "upload" with the name of "uploaded_file.txt"
+            $exportFile = "export.csv";
+            move_uploaded_file($_FILES["upload_csv"]["tmp_name"], ROOT . "/storage/" . $exportFile);
+
+            $row = 1;
+            if (($handle = fopen(ROOT . "/storage/" . $exportFile, "r")) !== false)
+            {
+                while (($data = fgetcsv($handle, 1000, ",")) !== false)
+                {
+
+                    $num = count($data);
+                    echo "<p> $num fields in line $row: <br /></p>\n";
+                    $row++;
+                    for ($c = 0; $c < $num; $c++)
+                    {
+                        echo $data[$c] . "<br />\n";
+                    }
+                }
+                fclose($handle);
+            }
+
+
+        }
+        else
+        {
+            echo "Return Code: " . $_FILES["upload_csv"]["error"] . "<br />";
+        }
+    }
+
+
+});
+
+
+$klein->get('/test', function (Request $request, Response $response, $service, $app){
+    //return $app->view->render(ROOT . '/templates/', []);
+    return $app->view->render("test.html", []);
 });
 
 

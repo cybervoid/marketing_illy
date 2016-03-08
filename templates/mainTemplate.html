@@ -2,16 +2,19 @@
 <html lang="en" >
 <head >
     <meta charset="UTF-8" >
+    <meta name="message" content="{{ error }}"/>
     <link rel="stylesheet" href="/css/main.css">
-    {% block css %}{% endblock %}
-    <script src="/js/vendor/jquery/dist/jquery.js"></script>
-    {% block js %}{% endblock %}
-
     <title>{% block title %} {% endblock %} - illy caffè</title>
+    <script src="/js/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/js/vendor/riot/riot.min.js"></script>
 </head >
 <body >
 
 {% block content %} {% endblock %}
 
+{% block css %}{% endblock %}
+
+
+{% block js %}{% endblock %}
 </body >
 </html >
