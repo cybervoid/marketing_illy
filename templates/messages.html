@@ -1,0 +1,42 @@
+{% extends "mainTemplate.html" %}
+
+{% block title %} MAP Pricing - prices {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/css/report.css" >
+{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-default" >
+    <div class="panel-heading" >
+        <h3 class="panel-title" >Welcome to illy caffè North America MAP Pricing page list</h3 >
+    </div >
+    <div class="panel-body" >
+        <div class="main-report" >
+
+            {% if message == false %}
+            <div class="alert alert-danger centerMe" role="alert" >
+                <p >Ups, something went wrong, please
+                    <a href="/">login</a> again
+                </p >
+            </div >
+            {% else %}
+
+            <div class="alert alert-danger centerMe" role="alert" >
+                <p >An error has occurred with the uploaded file, please check the file and
+                    <a href="/">try again</a>.
+                </p >
+            </div >
+
+
+
+
+            {% endif %}
+
+        </div >
+    </div >
+</div >
+
+
+{% endblock %}

@@ -25,7 +25,7 @@ $klein->respond(function(Request $request, Response $response, ServiceProvider $
         return new PDO(sprintf(getenv('DSN'), ROOT));
     });
 
-    $loader = new Twig_Loader_Filesystem(ROOT . '/templates');
+    $loader = new Twig_Loader_Filesystem(array(ROOT . '/templates', ROOT . '/storage'));
 
     $cache = false;
     if (getenv('CACHE'))
@@ -34,5 +34,7 @@ $klein->respond(function(Request $request, Response $response, ServiceProvider $
     }
 
     $twig = new Twig_Environment($loader, array('cache' => $cache, 'debug' => getenv('DEV')));
+    if(getenv('DEV'))
+        $twig->addExtension(new Twig_Extension_Debug());
     $app->view = $twig;
 });

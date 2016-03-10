@@ -1,7 +1,10 @@
 {% extends "mainTemplate.html" %}
 
-{% block title %} MAP Pricing {% endblock %}
+{% block title %} MAP Pricing - prices {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="/css/report.css" >
+{% endblock %}
 
 {% block content %}
 
@@ -11,113 +14,25 @@
     </div >
     <div class="panel-body" >
         <div class="main-report" >
-            <p class="chart-top-sep">Below are the MAP prices referred to in Section 2 of the illy caffe North America MAP Pricing Policy.</p>
+            <p class="chart-top-sep" >Below are the MAP prices referred to in Section 2 of the illy caffe North America
+                MAP Pricing Policy.</p >
+
+            {% if report == false %}
+            <div class="alert alert-info centerMe" role="alert" >
+                <p >No prices has been uploaded yet, please come back later</p >
+            </div >
 
 
-            <table class="table table-striped table-bordered table-hover" >
-                <thead >
-                <tr class="illy-header" >
-                    <td class="table-header" >Machine Model</td >
-                    <td class="table-header" >Color</td >
-                    <td class="table-header" >Item Number</td >
-                    <td class="table-header" >EAN</td >
-                    <td class="table-header" >MAP Price</td >
-                </tr >
-                </thead >
-                <tbody >
-                <tr >
-                    <td class="table-header" >Francis Francis Y5 Duo iperEspresso machine
-                    </td >
-                    <td>Black</td>
-                    <td>60068</td>
-                    <td>8-02778598597-3</td>
-                    <td >$299.00</td >
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis Y5 Duo iperEspresso machine</td >
-                    <td>Satin</td>
-                    <td>60072</td>
-                    <td>8-02778598599-7</td>
-                    <td >$299.00</td >
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis Y5 Duo iperEspresso machine</td >
-                    <td>White</td>
-                    <td>60071</td>
-                    <td>8-02778598595-9</td>
-                    <td >$299.00</td >
-                </tr >
+            {% else %}
+            {% include report %}
+            {% endif %}
 
-                <tr >
-                    <td class="table-header" >Francis Francis Y5 Milk Espresso & Coffee iperEspresso machine
-                    </td >
-                    <td>Black</td>
-                    <td>260088</td>
-                    <td>8-02778599086-1</td>
-                    <td >$399.00</td >
-                </tr >
-                <tr >
-                    <td  class="table-header" >Francis Francis Y5 Milk Espresso & Coffee iperEspresso machine</td >
-                    <td>Satin</td>
-                    <td>260106</td>
-                    <td>8-02778599471-5</td>
-                    <td>$399.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis Y3 iperEspresso machine</td >
-                    <td>Black</td>
-                    <td>6745</td>
-                    <td>8-02778597448-9</td>
-                    <td>$200.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis Y3 iperEspresso machine</td >
-                    <td>Red</td>
-                    <td>60076</td>
-                    <td>8-02778598686-4</td>
-                    <td>$200.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis X7.1 iperEspresso machine</td >
-                    <td>Black</td>
-                    <td>206591</td>
-                    <td>8-02778507038-9</td>
-                    <td>$295.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis X7.1 iperEspresso machine</td >
-                    <td>Red</td>
-                    <td>206606</td>
-                    <td>8-02778507050-1</td>
-                    <td>$295.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis X1 iperEspresso machine</td >
-                    <td>Black</td>
-                    <td>216557</td>
-                    <td>8-02778501050-7</td>
-                    <td>$595.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis X1 iperEspresso machine</td >
-                    <td>Red</td>
-                    <td>216556</td>
-                    <td>8-02778501049-1</td>
-                    <td>$595.00</td>
-                </tr >
-                <tr >
-                    <td class="table-header" >Francis Francis X1 iperEspresso machine</td >
-                    <td>Stainless Steel</td>
-                    <td>216558</td>
-                    <td>8-02778501051-4</td>
-                    <td>$695.00</td>
-                </tr >
-                </tbody >
 
-            </table >
-            <p class="chart-bottom-sep">For any questions, please contact the illy MAP Administrator at <a href="mailto:mapadmin@illy.com">mapadmin@illy.com</a></p>
+            <p class="chart-bottom-sep" >For any questions, please contact the illy MAP Administrator at <a
+                    href="mailto:mapadmin@illy.com" >mapadmin@illy.com</a ></p >
         </div >
     </div >
 </div >
+
 
 {% endblock %}

@@ -9,6 +9,7 @@ $klein = new \Klein\Klein();
 
 require_once 'default_controller.php';
 
+
 $klein->get('/', function (Request $request, Response $response, ServiceProvider $service, $app)
 {
 
@@ -34,13 +35,21 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
     if (!$access)
     {
         $service->flash('Wrong username and/or password.', 'error');
-
         return $response->redirect('/');
     }
     else
     {
-        return $app->view->render($access . '.html', ['user' => getenv('USERNAME'),
-            'admin' => getenv('ADMIN-USERNAME')]);
+        $importedReport = getenv('REPORT_NAME');
+        if(file_exists(ROOT . '/storage/' . $importedReport)) $report = $importedReport; else
+            $report = false;
+
+
+        return $app->view->render( $access . '.html', [
+            'report' => $report,
+            'user' => getenv('USERNAME'),
+            'admin' => getenv('ADMIN-USERNAME')
+        ]);
+
     }
 
 
@@ -77,40 +86,34 @@ $klein->post('/resetpwd', function (Request $request, Response $response, $servi
 
 $klein->post('/upload', function (Request $request, Response $response, $service, $app)
 {
-
-
     if (isset($_FILES["upload_csv"]))
     {
         if ($_FILES["upload_csv"]["error"] >= 0)
         {
-            //Print file details
-            echo "Upload: " . $_FILES["upload_csv"]["name"] . "<br />";
-            echo "Type: " . $_FILES["upload_csv"]["type"] . "<br />";
-            echo "Size: " . ($_FILES["upload_csv"]["size"] / 1024) . " Kb<br />";
-            echo "Temp file: " . $_FILES["upload_csv"]["tmp_name"] . "<br />";
+            $file_size = ($_FILES["upload_csv"]["size"] / 1024);
 
-
-            //Store file in directory "upload" with the name of "uploaded_file.txt"
-            $exportFile = "export.csv";
-            move_uploaded_file($_FILES["upload_csv"]["tmp_name"], ROOT . "/storage/" . $exportFile);
-
-            $row = 1;
-            if (($handle = fopen(ROOT . "/storage/" . $exportFile, "r")) !== false)
-            {
-                while (($data = fgetcsv($handle, 1000, ",")) !== false)
-                {
-
-                    $num = count($data);
-                    echo "<p> $num fields in line $row: <br /></p>\n";
-                    $row++;
-                    for ($c = 0; $c < $num; $c++)
-                    {
-                        echo $data[$c] . "<br />\n";
-                    }
-                }
-                fclose($handle);
+            if($file_size < 1 ){
+                return $app->view->render( 'messages.html', [
+                    'message' => 'error_upload'
+                ]);
             }
 
+            //Store file in directory "upload" with the name of "uploaded_file.txt"
+            $uploadedFile = "uploaded.csv";
+            move_uploaded_file($_FILES["upload_csv"]["tmp_name"], ROOT . "/storage/" . $uploadedFile);
+
+            $csv= file_get_contents(ROOT . '/storage/' . $uploadedFile);
+            $data = array_map("str_getcsv", explode("\n", $csv));
+
+            file_put_contents(ROOT . '/storage/' . 'uploaded_report.html',
+                $app->view->render( 'build_report.html', [
+                    'data' => $data
+                ])
+            );
+
+            return $app->view->render( 'report.html', [
+                'report' => getenv('REPORT_NAME')
+            ]);
 
         }
         else
@@ -120,12 +123,6 @@ $klein->post('/upload', function (Request $request, Response $response, $service
     }
 
 
-});
-
-
-$klein->get('/test', function (Request $request, Response $response, $service, $app){
-    //return $app->view->render(ROOT . '/templates/', []);
-    return $app->view->render("test.html", []);
 });
 
 
