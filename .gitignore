@@ -1,6 +1,5 @@
 vendor/
 .idea/workspace.xml
 .env
-storage/data.db
 public/css
 public/js/vendor
