@@ -103,7 +103,16 @@ $klein->post('/upload', function (Request $request, Response $response, $service
             move_uploaded_file($_FILES["upload_csv"]["tmp_name"], ROOT . "/storage/" . $uploadedFile);
 
             $csv= file_get_contents(ROOT . '/storage/' . $uploadedFile);
-            $data = array_map("str_getcsv", explode("\n", $csv));
+            $importedData = array_map("str_getcsv", explode("\n", $csv));
+
+            $data = [];
+
+            foreach ($importedData as $row){
+                if(isset($row[1]) && isset($row[2])){
+                    if($row[1]!='' && $row[2]!='') $data[]= $row;
+                }
+            }
+
 
             file_put_contents(ROOT . '/storage/' . 'uploaded_report.html',
                 $app->view->render( 'build_report.html', [
@@ -121,9 +130,8 @@ $klein->post('/upload', function (Request $request, Response $response, $service
             echo "Return Code: " . $_FILES["upload_csv"]["error"] . "<br />";
         }
     }
-
-
 });
+
 
 
 $klein->dispatch();
