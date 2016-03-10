@@ -1,5 +1,6 @@
 var sass = require('gulp-sass');
 var gulp = require('gulp');
+var bower = require('gulp-bower');
 var exec = require('child_process').exec;
 
 var riot = require('gulp-riot');
@@ -33,12 +34,9 @@ gulp.task('composer', function (cb)
 });
 
 
-gulp.task('bower', function (cb) {
-    exec('bower install --allow-root', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        cb(err);
-    });
+gulp.task('bower', function ()
+{
+    return bower();
 });
 
 gulp.task('riot', function (cb)
