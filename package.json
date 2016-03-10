@@ -2,6 +2,7 @@
   "name": "my-program",
   "version": "1.2.5",
   "dependencies": {
+    "bower": "^1.7.7",
     "gulp": "^3.9.0",
     "gulp-bower": "0.0.13",
     "gulp-exec": "^2.1.2",
