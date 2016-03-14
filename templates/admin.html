@@ -24,13 +24,9 @@
 
             <div class="panel-heading" >Change regular password</div >
             <div class="panel-body" >
-                <form method="post" action="/resetpwd" name="users" id="users" >
+                <form method="post" action="/userresetpwd" name="users" id="users" >
 
                     <input type="hidden" name="username" value="{{ user }}" >
-                    <label for="old_pass" >Old password</label >
-                    <input type="password" id="old_pass" name="old_pass" class="form-control components-separator"
-                           required >
-
                     <label for="new_pass" >New password</label >
                     <input type="password" id="new_pass" name="new_pass" class="form-control components-separator"
                            required >
@@ -55,11 +51,8 @@
         <div class="panel panel-info content-panel-admin content-panel-admin" >
             <div class="panel-heading" >Change admin access password</div >
             <div class="panel-body" >
-                <form method="post" action="/resetpwd" name="admin" id="admin" >
+                <form method="post" action="/adminresetpwd" name="admin" id="admin" >
 
-                    <label for="old_pass" >Old password</label >
-                    <input type="password" id="old_pass" name="old_pass" class="form-control components-separator"
-                           required >
                     <input type="hidden" name="username" value="{{ admin }}" >
                     <label for="new_pass" >New password</label >
                     <input type="password" id="new_pass" name="new_pass" class="form-control components-separator"

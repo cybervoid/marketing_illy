@@ -55,32 +55,39 @@ $klein->post('/auth', function (Request $request, Response $response, $service, 
 
 });
 
-$klein->post('/resetpwd', function (Request $request, Response $response, $service, $app)
+$klein->post('/userresetpwd', function (Request $request, Response $response, $service, $app)
 {
-
-    $msg = '';
-
-    $result = $app->auth->userNameValidator($request->param('username'), $request->param('old_pass'));
-
-    if ($result)
+    $changePassword = $app->auth->changePassword($request->param('username'), $request->param('new_pass'));
+    if ($changePassword)
     {
-        $changePassword = $app->auth->changePassword($request->param('username'), $request->param('new_pass'));
-        if ($changePassword)
-        {
-            $msg = 'Password changed successfully';
-        }
-        else
-        {
-            $msg = 'Error trying to change password';
-        }
+        $msg = 'Password changed successfully';
     }
     else
     {
-        $msg = 'Please verify your old password';
+        $msg = 'Error trying to change password';
     }
 
     return $app->view->render('admin.html', ['user' => getenv('USERNAME'), 'admin' => getenv('ADMIN-USERNAME'),
         'msg_div' => $request->param('req_type'), 'msg' => $msg]);
+
+
+});
+
+$klein->post('/adminresetpwd', function (Request $request, Response $response, $service, $app)
+{
+    $changePassword = $app->auth->changePassword($request->param('username'), $request->param('new_pass'));
+    if ($changePassword)
+    {
+        $msg = 'Password changed successfully';
+    }
+    else
+    {
+        $msg = 'Error trying to change password';
+    }
+
+    return $app->view->render('admin.html', ['user' => getenv('USERNAME'), 'admin' => getenv('ADMIN-USERNAME'),
+        'msg_div' => $request->param('req_type'), 'msg' => $msg]);
+
 
 });
 
@@ -132,10 +139,10 @@ $klein->post('/upload', function (Request $request, Response $response, $service
     }
 });
 
-
-
 $klein->dispatch();
 
+// create a direct link with no password
+// remove the old password requirement to change passwords
 // todo en el admin page verificar con javascript que el old and new passwords are the same
 // todo hacer un footer en el template con el logo de illy
 // todo check why if you don't type in any password it works
